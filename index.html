@@ -248,9 +248,9 @@ const quizzes = [
       ], scores: [4,3,2,1] }
     ],
     resultImages: [
-      "https://i.imgur.com/Xw0E5fB.png", // 企鵝型
-      "https://i.imgur.com/3d1v0vB.png", // 多啦A夢型
-      "https://i.imgur.com/4XvF5z2.png", // 馬斯克型
+      "hhttps://ibb.co/sJDHKg64", // 企鵝型
+      "https://ibb.co/bgYfgrt4", // 多啦A夢型
+      "https://ibb.co/0jzdS4h6", // 馬斯克型
       "https://i.imgur.com/2g3r3lT.png", // IG KOL型
       "https://i.imgur.com/6Xy9Z3T.png", // 反烏托邦型
       "https://i.imgur.com/5i5K4lJ.png", // 毒舌型
@@ -274,7 +274,7 @@ const quizzes = [
       { q: "你人生座右銘係：", options: ["💸 有錢就係大爺", "⏳ 人生苦短，搵錢最緊要", "😜 別人笑我太瘋癲，我笑佢人搵錢慢", "🍿 反正都冇用，睇下Netflix先"], scores: [4,3,2,1] }
     ],
     resultImages: [
-      "https://i.imgur.com/jkKQ1eG.png", // 馬斯克級
+      "https://upload.wikimedia.org/wikipedia/commons/4/49/Elon_Musk_2015.jpg", // 馬斯克級
       "https://i.imgur.com/2g3r3lT.png", // 補習天王級
       "https://i.imgur.com/5i5K4lJ.png", // 打工皇帝
       "https://i.imgur.com/vzZ1Zzv.png"  // 廢青級
@@ -391,7 +391,7 @@ function showResult(score) {
       message = '打工皇帝（日日等花紅級）<br>你唔抗拒搵錢，但唔會為咗錢賣晒自己。發達機會麻麻，穩穩陣陣，夠食夠住，唔使發夢。';
       img = quizzes[1].resultImages[2];
     } else {
-      message = '廢青級（Netflix專員）<br>你對發達冇乜興趣，搵夠用就得。唔努力，AI都會取代你，想發達？下世啦！';
+      message = '廢青級（Netflix專員）<br>你對發達冇乜興趣，搵夠用就得。唔努力，AI都會取代你，或者唔會，畢竟AI唔會學廢青，想發達？下世啦！';
       img = quizzes[1].resultImages[3];
     }
   }
@@ -459,7 +459,7 @@ function showShareBtns() {
 
 // --- 結果頁「其他心理測驗」list ---
 function showOtherQuizzes() {
-  let html = `<h4>👀 仲想玩？試埋其他心理測驗：</h4>`;
+  let html = `<h4>👀仲想玩😏？好啦，試埋其他心理測驗：</h4>`;
   quizzes.forEach((quiz, idx) => {
     if(idx != currentQuizIndex){
       html += `<button class="other-quiz-btn" onclick="switchQuiz(${idx})">${quiz.title}</button>`;
