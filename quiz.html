@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>心理測驗｜發達指數 KOL 版</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', 'Noto Sans TC', Arial, sans-serif;
+      background: linear-gradient(135deg, #8fd3f4 0%, #84fab0 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 440px;
+      margin: 40px auto;
+      background: rgba(255,255,255,0.98);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+      padding: 32px 24px 24px 24px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 1s;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(40px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      color: #1e7c6b;
+      margin-bottom: 8px;
+    }
+    .quiz-select {
+      width: 100%;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      border: 1px solid #c9e4ca;
+      padding: 8px;
+      margin-bottom: 18px;
+      background: #f6fff8;
+    }
+    .question-card {
+      background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+      border-radius: 14px;
+      margin-bottom: 26px;
+      box-shadow: 0 2px 12px rgba(255, 193, 7, 0.08);
+      padding: 20px 16px 16px 16px;
+      animation: fadeIn 0.7s;
+    }
+    .question-card p {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #3b3b3b;
+      margin: 0 0 12px 0;
+      letter-spacing: 1px;
+    }
+    .options label {
+      display: block;
+      background: #fffbe7;
+      border-radius: 8px;
+      margin: 7px 0;
+      padding: 10px 14px;
+      font-size: 1.04rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.2s, background 0.2s;
+      position: relative;
+    }
+    .options label:hover, .options input:checked + span {
+      border: 2px solid #fda085;
+      background: #fffde4;
+    }
+    .options input[type="radio"] {
+      display: none;
+    }
+    .options span {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+      color: #fff;
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 14px 0;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 10px;
+      box-shadow: 0 2px 8px rgba(67,233,123,0.13);
+      transition: background 0.2s;
+    }
+    .submit-btn:hover {
+      background: linear-gradient(90deg, #38f9d7 0%, #43e97b 100%);
+    }
+    .result {
+      margin-top: 30px;
+      padding: 24px;
+      background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+      border-radius: 18px;
+      color: #fff;
+      font-size: 1.18rem;
+      text-align: center;
+      animation: fadeIn 1s;
+      box-shadow: 0 2px 12px rgba(240,147,251,0.13);
+      position: relative;
+    }
+    .result img {
+      width: 90px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 12px rgba(255,255,255,0.2);
+    }
+    .result h3 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .share-btn {
+      margin: 6px 4px 0 0;
+      background: #fff;
+      border: 1.5px solid #b2f7ef;
+      color: #222;
+      border-radius: 7px;
+      padding: 7px 13px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .share-btn:hover {
+      background: #b2f7ef;
+    }
+    #share-btns {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #other-quizzes {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #other-quizzes h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      font-size: 1.08rem;
+      letter-spacing: 1px;
+    }
+    .other-quiz-btn {
+      margin: 6px 4px 0 0;
+      background: #fff;
+      border: 1.5px solid #b2f7ef;
+      color: #222;
+      border-radius: 7px;
+      padding: 7px 13px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .other-quiz-btn:hover {
+      background: #b2f7ef;
+    }
+    @media (max-width: 500px) {
+      .container { padding: 10px 2vw 20px 2vw;}
+      h1 { font-size: 1.4rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>心理測驗｜發達指數 KOL 版</h1>
+    <select id="quiz-select" class="quiz-select"></select>
+    <div id="quiz-container"></div>
+    <button id="submit-btn" class="submit-btn">提交答案，睇下你幾時發達💸</button>
+    <div id="result" class="result" style="display:none;"></div>
+    <div id="share-btns" style="display:none;">
+      <span style="font-weight:bold;">Share俾Friend：</span>
+      <button class="share-btn" id="wa-btn">💚 WhatsApp</button>
+      <button class="share-btn" id="line-btn">💬 Line</button>
+      <button class="share-btn" id="copy-btn">📋 Copy結果</button>
+      <button class="share-btn" id="ig-btn">📸 IG/Threads</button>
+    </div>
+    <div id="other-quizzes"></div>
+  </div>
+<script>
+const quizzes = [
+  // 1. 翻版MBTI（8大人格）
+  {
+    title: "翻版MBTI｜港產人格測驗🐧",
+    questions: [
+      { q: "你喺Party入面通常係邊個角色？", options: [
+        "🐧 企喺角落玩手機（魯迅）", 
+        "🤣 企中間大聲講笑話（周星馳）", 
+        "🤖 幫手收拾、照顧人（多啦A夢）", 
+        "📸 影相打卡，之後IG story洗版（KOL）"
+      ], scores: [1,2,3,4] },
+      { q: "你最怕邊種人？", options: [
+        "🗣 八婆", 
+        "🧑‍💼 老細", 
+        "👩‍👧 母親", 
+        "🪞 自己"
+      ], scores: [1,2,3,4] },
+      { q: "你最想擁有邊種超能力？", options: [
+        "💸 一夜變有錢", 
+        "🧠 讀心術", 
+        "🫥 隱形", 
+        "⏰ 返過去改人生"
+      ], scores: [4,3,2,1] },
+      { q: "你點樣處理壓力？", options: [
+        "🍔 食嘢", 
+        "😴 睡覺", 
+        "🏃 跑步", 
+        "💻 上網寸人"
+      ], scores: [1,2,3,4] },
+      { q: "你覺得自己最似邊種動物？", options: [
+        "🦊 狐狸", 
+        "🐶 狗", 
+        "🐱 貓", 
+        "🐧 企鵝"
+      ], scores: [4,3,2,1] },
+      { q: "你會點樣同人溝通？", options: [
+        "💥 直接爆粗", 
+        "🔄 轉彎抹角", 
+        "🤐 唔講野", 
+        "😂 用梗圖"
+      ], scores: [4,3,2,1] },
+      { q: "你最唔鍾意人哋點形容你？", options: [
+        "😑 冇用", 
+        "😠 太認真", 
+        "😴 太懶", 
+        "😏 太毒舌"
+      ], scores: [1,2,3,4] },
+      { q: "你嘅人生座右銘係？", options: [
+        "💸 有錢就係大爺", 
+        "🎉 人生苦短，及時行樂", 
+        "🤨 唔好信人", 
+        "😜 反正都冇用"
+      ], scores: [4,3,2,1] }
+    ],
+    resultImages: [
+      "https://i.imgur.com/Xw0E5fB.png", // 企鵝型
+      "https://i.imgur.com/3d1v0vB.png", // 多啦A夢型
+      "https://i.imgur.com/4XvF5z2.png", // 馬斯克型
+      "https://i.imgur.com/2g3r3lT.png", // IG KOL型
+      "https://i.imgur.com/6Xy9Z3T.png", // 反烏托邦型
+      "https://i.imgur.com/5i5K4lJ.png", // 毒舌型
+      "https://i.imgur.com/1Q9Z1Qk.png", // 斜槓型
+      "https://i.imgur.com/vzZ1Zzv.png"  // 逃避現實型
+    ]
+  },
+  // 2. 發達測驗
+  {
+    title: "幾時先會發達？💸",
+    questions: [
+      { q: "你最鍾意以下邊個App？", options: ["📸 IG（睇人炫富）", "📺 YouTube（學人賺錢）", "📈 投資App（日日睇股價）", "🛒 淘寶（日日等減價）"], scores: [4,3,2,1] },
+      { q: "如果你中咗六合彩，你會：", options: ["🌎 即刻辭工環遊世界", "💰 投資再投資，誓要錢搵錢", "😅 先還晒卡數，剩低慢慢用", "🙈 其實冇買過六合彩"], scores: [4,3,2,1] },
+      { q: "你最想擁有邊種超能力？", options: ["🤑 一夜暴富", "🧠 讀心術（睇下老細點諗）", "⏳ 時間倒流（返去買樓）", "🦹‍♂️ 隱形（唔使俾人搵）"], scores: [4,3,2,1] },
+      { q: "你覺得點解有啲人咁易發達？", options: ["🏦 有背景", "🧠 有腦", "🍀 有運", "😏 有樣"], scores: [4,3,2,1] },
+      { q: "你最怕咩？", options: ["💸 冇錢", "🕊 冇自由", "📶 冇WiFi", "👻 冇人Like"], scores: [4,3,2,1] },
+      { q: "你會唔會為咗搵錢做啲自己唔鍾意嘅嘢？", options: ["💵 會，搵到錢最緊要", "🤔 睇下幾多錢先", "🙅‍♂️ 唔會，做人要有底線", "🦑 我本身冇咩底線"], scores: [4,3,2,1] },
+      { q: "你最想做邊種生意？", options: ["🍛 開餐廳（日日煩）", "📚 開補習社（日日講）", "🏦 開投資公司（日日吹）", "🛍 開IG shop（日日影）"], scores: [4,3,2,1] },
+      { q: "你覺得自己最大優點係咩？", options: ["🤑 識搵錢", "🤝 識做人", "🗣 識寸人", "😴 識hea"], scores: [4,3,2,1] },
+      { q: "你點睇AI？", options: ["🤖 威脅我搵食", "🤩 幫我搵食", "😐 冇咩感覺", "👾 其實我都係AI"], scores: [4,3,2,1] },
+      { q: "你人生座右銘係：", options: ["💸 有錢就係大爺", "⏳ 人生苦短，搵錢最緊要", "😜 別人笑我太瘋癲，我笑佢人搵錢慢", "🍿 反正都冇用，睇下Netflix先"], scores: [4,3,2,1] }
+    ],
+    resultImages: [
+      "https://i.imgur.com/jkKQ1eG.png", // 馬斯克級
+      "https://i.imgur.com/2g3r3lT.png", // 補習天王級
+      "https://i.imgur.com/5i5K4lJ.png", // 打工皇帝
+      "https://i.imgur.com/vzZ1Zzv.png"  // 廢青級
+    ]
+  },
+  // 3. 討好型人格
+  {
+    title: "討好型人格測驗🧸",
+    questions: [
+      { q: "朋友約你出街，你明明唔想去，但你會：", options: ["😅 硬住頭皮去", "🙄 話自己有事", "🦾 即刻拒絕", "😑 去咗之後全程黑面"], scores: [4,3,2,1] },
+      { q: "有人問你借錢，你會：", options: ["💸 即刻拎錢", "😬 講下數都借", "🙅‍♂️ 直接話冇錢", "🗯 借完日日追數"], scores: [4,3,2,1] },
+      { q: "你最怕人哋點睇你？", options: ["😔 話你冇用", "😅 話你唔夠朋友", "😏 話你自私", "😑 其實唔care"], scores: [4,3,2,1] },
+      { q: "做Group Project，啲人hea唔做，你會：", options: ["🫠 自己做晒", "😬 叫下人最後都係自己做", "😤 直接鬧爆", "🫥 自己做完再呻"], scores: [4,3,2,1] }
+    ],
+    resultImages: [
+      "https://i.imgur.com/1Q9Z1Qk.png", // 多啦A夢級
+      "https://i.imgur.com/3d1v0vB.png", // 米奇老鼠級
+      "https://i.imgur.com/6Xy9Z3T.png", // 魯迅級
+      "https://i.imgur.com/7JY3yGx.png"  // 尼采級
+    ]
+  }
+];
+
+let currentQuizIndex = 0;
+const quizSelect = document.getElementById('quiz-select');
+const quizContainer = document.getElementById('quiz-container');
+const submitBtn = document.getElementById('submit-btn');
+const resultDiv = document.getElementById('result');
+const shareBtns = document.getElementById('share-btns');
+const waBtn = document.getElementById('wa-btn');
+const lineBtn = document.getElementById('line-btn');
+const copyBtn = document.getElementById('copy-btn');
+const igBtn = document.getElementById('ig-btn');
+const otherQuizzesDiv = document.getElementById('other-quizzes');
+
+// 動態生成測驗選單
+quizzes.forEach((quiz, idx) => {
+  const option = document.createElement('option');
+  option.value = idx;
+  option.textContent = quiz.title;
+  quizSelect.appendChild(option);
+});
+
+quizSelect.addEventListener('change', () => {
+  currentQuizIndex = quizSelect.value;
+  loadQuiz();
+  resultDiv.style.display = 'none';
+  shareBtns.style.display = 'none';
+  otherQuizzesDiv.innerHTML = '';
+});
+
+function loadQuiz() {
+  const quiz = quizzes[currentQuizIndex];
+  let html = '';
+  quiz.questions.forEach((item, index) => {
+    html += `<div class='question-card'><p>${index + 1}. ${item.q}</p><div class="options">`;
+    item.options.forEach((option, i) => {
+      html += `<label><input type='radio' name='q${index}' value='${item.scores[i]}' /><span>${option}</span></label>`;
+    });
+    html += `</div></div>`;
+  });
+  quizContainer.innerHTML = html;
+}
+
+function calculateScore() {
+  let total = 0;
+  const quiz = quizzes[currentQuizIndex];
+  for(let i=0; i<quiz.questions.length; i++) {
+    const options = document.getElementsByName('q'+i);
+    let answered = false;
+    for(let option of options) {
+      if(option.checked) {
+        total += parseInt(option.value);
+        answered = true;
+        break;
+      }
+    }
+    if(!answered) return null; // 有題未答
+  }
+  return total;
+}
+
+function showResult(score) {
+  let message = '';
+  let img = '';
+  // 翻版MBTI
+  if(currentQuizIndex == 0) {
+    // 8大人格
+    const types = [
+      { name: "企鵝型（冷感機智王）", img: quizzes[0].resultImages[0], msg: "外冷內熱，表面hea爆，內心其實諗到飛起。唔多出聲，但一開口就寸到人無還手之力。<br><b>金句：</b>世界咁假，我只信自己。" },
+      { name: "多啦A夢型（萬能解決師）", img: quizzes[0].resultImages[1], msg: "人地有咩事都搵你，你又真係有法寶幫到人。腦入面有無限解決方法，現實就...有時都唔想理。<br><b>金句：</b>有咩問題？搵我啦，唔好煩我就得。" },
+      { name: "馬斯克型（發夢現實家）", img: quizzes[0].resultImages[2], msg: "腦入面有千百個搵錢大計，講就天花亂墜，做就...下次先啦。<br><b>金句：</b>我遲啲一定發達，今日先瞓多陣。" },
+      { name: "IG KOL型（認同感追逐者）", img: quizzes[0].resultImages[3], msg: "最緊要Like數同認同感。做人做事都要人讚，唔讚我即刻Unfriend你。<br><b>金句：</b>你Like咗我未？未Like快啲Like！" },
+      { name: "反烏托邦型（世界觀拆解者）", img: quizzes[0].resultImages[4], msg: "睇穿世界假面具，成日懷疑人生。討厭一切官腔同假正經，最鍾意拆解社會bug。<br><b>金句：</b>呢個世界，冇嘢係真。" },
+      { name: "毒舌企鵝型（寸爆全場）", img: quizzes[0].resultImages[5], msg: "嘴巴快過腦，寸人係日常。朋友少，但個個都識得欣賞你嘅幽默。<br><b>金句：</b>唔好意思，我講真話啫。" },
+      { name: "斜槓Slashie型（多元玩家）", img: quizzes[0].resultImages[6], msg: "咩都想試，咩都唔專精。今日學AI，聽日炒股，後日開YouTube。<br><b>金句：</b>我咩都識啲，咩都未精。" },
+      { name: "逃避現實型（拖延大師）", img: quizzes[0].resultImages[7], msg: "咩都拖到最後一刻，deadline唔到唔郁。<br><b>金句：</b>我下次一定早啲做...下次啦。" }
+    ];
+    let idx = Math.floor((score-8)/((quizzes[0].questions.length*4-8)/8));
+    if(idx < 0) idx = 0;
+    if(idx > 7) idx = 7;
+    message = `<b>${types[idx].name}</b><br>${types[idx].msg}`;
+    img = types[idx].img;
+  }
+  // 發達測驗
+  else if(currentQuizIndex == 1) {
+    if(score >= 36) {
+      message = '發達預備役（馬斯克級）<br>你係天生搵錢機器，腦入面日日諗點樣發達。記住：唔好俾人呃，發達之前先學識點保住條命！';
+      img = quizzes[1].resultImages[0];
+    } else if(score >= 28) {
+      message = '中產潛力股（補習天王級）<br>你有搵錢心，但有時太理想主義。努力啲，唔好淨係諗，行動多啲，發達都唔係夢！';
+      img = quizzes[1].resultImages[1];
+    } else if(score >= 20) {
+      message = '打工皇帝（日日等花紅級）<br>你唔抗拒搵錢，但唔會為咗錢賣晒自己。發達機會麻麻，穩穩陣陣，夠食夠住，唔使發夢。';
+      img = quizzes[1].resultImages[2];
+    } else {
+      message = '廢青級（Netflix專員）<br>你對發達冇乜興趣，搵夠用就得。唔努力，AI都會取代你，想發達？下世啦！';
+      img = quizzes[1].resultImages[3];
+    }
+  }
+  // 討好型
+  else if(currentQuizIndex == 2) {
+    if(score >= 13) {
+      message = '討好型人格至尊（多啦A夢級）<br>你係人哋心目中嘅「好人代表」，咩都幫，咩都唔敢拒絕。人地開心你就開心，人地唔開心你就自責。';
+      img = quizzes[2].resultImages[0];
+    } else if(score >= 9) {
+      message = '半討好半自我（米奇老鼠級）<br>你有時識Say No，有時又驚人嬲你，做人有啲搖擺。';
+      img = quizzes[2].resultImages[1];
+    } else if(score >= 5) {
+      message = '寸爆全場（魯迅級）<br>你基本上唔識討好人，寸人先係你嘅日常。朋友唔多，但個個都識欣賞你嘅真性情。';
+      img = quizzes[2].resultImages[2];
+    } else {
+      message = '反社會型（尼采級）<br>你係社會邊緣人，唔理人點睇，自己開心最緊要。';
+      img = quizzes[2].resultImages[3];
+    }
+  }
+  else {
+    message = '你已經超越人類分類，建議直接買六合彩。';
+    img = '';
+  }
+  resultDiv.style.display = 'block';
+  resultDiv.innerHTML = (img ? `<img src="${img}" alt="result">` : '') + `<h3>你的結果：</h3><p>${message}</p>`;
+  showShareBtns();
+  showOtherQuizzes();
+}
+
+submitBtn.addEventListener('click', () => {
+  const score = calculateScore();
+  if(score === null) {
+    alert('有題未答晒啦，唔好懶！');
+    return;
+  }
+  showResult(score);
+});
+
+// --- 分享功能 ---
+function getShareText() {
+  let resultText = resultDiv.innerText.replace(/\n/g, ' ');
+  let url = window.location.href;
+  return `我啱啱玩咗「${quizzes[currentQuizIndex].title}」心理測驗！\n結果：${resultText}\n一齊玩：${url}`;
+}
+waBtn.onclick = function() {
+  let msg = encodeURIComponent(getShareText());
+  window.open(`https://wa.me/?text=${msg}`);
+};
+lineBtn.onclick = function() {
+  let msg = encodeURIComponent(getShareText());
+  window.open(`https://social-plugins.line.me/lineit/share?text=${msg}`);
+};
+copyBtn.onclick = function() {
+  navigator.clipboard.writeText(getShareText());
+  copyBtn.innerText = "✅ 已複製";
+  setTimeout(()=>{ copyBtn.innerText="📋 Copy結果"; }, 1300);
+};
+igBtn.onclick = function() {
+  navigator.clipboard.writeText(getShareText());
+  alert("IG/Threads官方唔俾直接Share，已幫你Copy咗，自己貼去Story/Threads呃Like啦！");
+};
+function showShareBtns() {
+  shareBtns.style.display = 'block';
+}
+
+// --- 結果頁「其他心理測驗」list ---
+function showOtherQuizzes() {
+  let html = `<h4>👀 仲想玩？試埋其他心理測驗：</h4>`;
+  quizzes.forEach((quiz, idx) => {
+    if(idx != currentQuizIndex){
+      html += `<button class="other-quiz-btn" onclick="switchQuiz(${idx})">${quiz.title}</button>`;
+    }
+  });
+  otherQuizzesDiv.innerHTML = html;
+}
+window.switchQuiz = function(idx){
+  quizSelect.value = idx;
+  currentQuizIndex = idx;
+  loadQuiz();
+  resultDiv.style.display = 'none';
+  shareBtns.style.display = 'none';
+  otherQuizzesDiv.innerHTML = '';
+}
+
+// 預設載入第一個測驗
+loadQuiz();
+</script>
+</body>
+</html>
